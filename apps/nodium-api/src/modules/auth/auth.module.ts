@@ -5,7 +5,11 @@ import { ClientsModule, Transport } from '@nestjs/microservices'
 @Module({
   imports: [
     ClientsModule.register([
-      { name: 'AUTH_SERVICE', transport: Transport.TCP },
+      {
+        name: 'AUTH_SERVICE',
+        transport: Transport.TCP,
+        options: { port: 3201 },
+      },
     ]),
   ],
   controllers: [AuthController],
