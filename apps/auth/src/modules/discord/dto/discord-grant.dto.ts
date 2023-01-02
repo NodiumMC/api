@@ -8,7 +8,5 @@ export class DiscordGrantDto {
   @IsNumber()
   expires_in: number
   @IsString()
-  refresh_token: string
-  @IsString()
   scope: string
 }
