@@ -2,7 +2,8 @@ import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { DiscordModule } from './modules/discord/discord.module'
 import { UserModule } from './modules/user/user.module'
-import { PrismaModule } from './modules/prisma/prisma.module'
+import { PrismaModule } from '@app/common'
+import { TokenModule } from './modules/token/token.module'
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { PrismaModule } from './modules/prisma/prisma.module'
     DiscordModule,
     UserModule,
     PrismaModule,
+    TokenModule,
   ],
 })
 export class AuthModule {}

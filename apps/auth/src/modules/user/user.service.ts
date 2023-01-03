@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { nanoid } from 'nanoid'
-import { PrismaService } from '../prisma/prisma.service'
+import { PrismaService } from '@app/common'
 import { Integration } from '../../types/integration'
 
 @Injectable()
@@ -21,5 +21,10 @@ export class UserService {
         },
       })
     }
+    return this.prisma.user.findFirstOrThrow({
+      where: {
+        integrations: { some },
+      },
+    })
   }
 }

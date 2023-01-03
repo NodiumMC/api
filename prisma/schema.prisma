@@ -15,6 +15,8 @@ enum IntegrationType {
 }
 
 model Integration {
+  @@map("integrations")
+
   id String @id @map("_id") @db.ObjectId @default(auto())
   userId String @db.ObjectId
   user User @relation(fields: [userId], references: [id])
@@ -23,6 +25,8 @@ model Integration {
 }
 
 model User {
+  @@map("users")
+
   id String @id @map("_id") @db.ObjectId @default(auto())
   nid String @unique
   username String? @unique
@@ -30,4 +34,14 @@ model User {
   integrations Integration[]
   createdAt DateTime @default(now())
   lastLoginAt DateTime @updatedAt
+  tokens Token[]
+}
+
+model Token {
+  @@map("tokens")
+
+  id String @id @map("_id") @db.ObjectId @default(auto())
+  token String @unique
+  userId String @db.ObjectId
+  user User @relation(fields: [userId], references: [id])
 }
