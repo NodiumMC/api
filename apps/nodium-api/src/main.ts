@@ -8,7 +8,7 @@ async function bootstrap() {
   app.enableCors()
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }))
   app.useGlobalFilters(new AllExceptionsFilter(app.get(HttpAdapterHost)))
-  await app.listen(3264)
+  await app.listen(3264, '0.0.0.0')
 }
 
 bootstrap()

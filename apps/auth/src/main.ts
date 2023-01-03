@@ -8,6 +8,7 @@ async function bootstrap() {
     transport: Transport.TCP,
     logger: new ConsoleLogger('Auth'),
     options: {
+      host: '0.0.0.0',
       port: 3201,
     },
   })
