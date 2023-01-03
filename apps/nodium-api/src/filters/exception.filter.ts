@@ -15,7 +15,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
 
     const body = {
       status: httpStatus,
-      error: exception.error,
+      error: exception.error ?? exception?.response?.message?.toLowerCase?.(),
     }
 
     httpAdapter.reply(ctx.getResponse(), body, httpStatus)
