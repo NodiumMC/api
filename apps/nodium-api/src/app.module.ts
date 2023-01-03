@@ -3,7 +3,7 @@ import { AuthModule } from './modules/auth/auth.module'
 import { APP_GUARD } from '@nestjs/core'
 import { AtGuard } from './common/guards'
 import { ConfigModule } from '@nestjs/config'
-import { UsersModule } from './modules/users/users.module';
+import { UsersModule } from './modules/users/users.module'
 
 @Module({
   imports: [

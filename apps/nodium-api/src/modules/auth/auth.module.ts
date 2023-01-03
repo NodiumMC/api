@@ -9,8 +9,13 @@ import { RtStrategy } from './strategies/rt.strategy'
     ClientsModule.register([
       {
         name: 'AUTH_SERVICE',
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         transport: Transport.TCP,
-        options: { port: 3201 },
+        options: {
+          host: process.env?.MICROSERVICE_AUTH_HOST ?? '0.0.0.0',
+          port: process.env?.MICROSERVICE_AUTH_PORT ?? 3201,
+        },
       },
     ]),
   ],
