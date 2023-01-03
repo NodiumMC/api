@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common'
-import { nanoid } from 'nanoid'
+import { customAlphabet } from 'nanoid'
 import { PrismaService } from '@app/common'
 import { Integration } from '../../types/integration'
+
+const nanoid = customAlphabet('0123456789abcdefghijklmnopqrstuvwxyz', 12)
 
 @Injectable()
 export class UserService {
@@ -24,6 +26,17 @@ export class UserService {
     return this.prisma.user.findFirstOrThrow({
       where: {
         integrations: { some },
+      },
+    })
+  }
+
+  async updateLastLogin(id: string) {
+    return this.prisma.user.update({
+      where: {
+        id,
+      },
+      data: {
+        lastLoginAt: new Date(),
       },
     })
   }
