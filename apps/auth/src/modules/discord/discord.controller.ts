@@ -28,6 +28,7 @@ export class DiscordController {
     const user = await this.userService.createFromIntegration({ type: IntegrationType.DISCORD, iid: discordUser.id })
     const tokens = await this.tokenService.generateTokenPair(user.id)
     await this.tokenService.addToken(user.id, tokens.refreshToken)
+    await this.userService.updateLastLogin(user.id)
     return tokens
   }
 }
