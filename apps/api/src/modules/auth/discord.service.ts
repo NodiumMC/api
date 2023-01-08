@@ -1,9 +1,8 @@
-import { Injectable } from '@nestjs/common'
+import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common'
 import { HttpService } from '@nestjs/axios'
 import { DiscordGrantDto } from './dto/discord-grant.dto'
 import { catchError, map, Observable } from 'rxjs'
 import { DiscordUserDto } from './dto/discord-user.dto'
-import { RpcException } from '@nestjs/microservices'
 import { nanoid } from 'nanoid'
 import * as qs from 'qs'
 
@@ -42,7 +41,7 @@ export class DiscordService {
       )
       .pipe(
         catchError((cause) => {
-          throw new RpcException({
+          throw new BadRequestException({
             message: 'Failed to grant',
             cause: cause.response?.data ?? cause.message,
           })
@@ -61,7 +60,7 @@ export class DiscordService {
       })
       .pipe(
         catchError((err) => {
-          throw new RpcException({ message: 'Failed to request user', cause: err.response?.data ?? err.message })
+          throw new InternalServerErrorException({ message: 'Failed to request user', cause: err.response?.data ?? err.message })
         }),
       )
       .pipe(map((o) => o.data))
