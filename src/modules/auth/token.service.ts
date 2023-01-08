@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from '@app/common'
 import { JwtService } from '@nestjs/jwt'
-import { TokenPair } from '@app/common'
+import { TokenPair } from './types'
 
 @Injectable()
 export class TokenService {

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { customAlphabet } from 'nanoid'
 import { PrismaService } from '@app/common'
-import { Integration } from '../../types/integration'
+import { Integration } from './types'
 
 const nanoid = customAlphabet('0123456789abcdefghijklmnopqrstuvwxyz', 12)
 

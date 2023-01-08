@@ -10,8 +10,6 @@ export class AllExceptionsFilter implements ExceptionFilter {
 
     const ctx = host.switchToHttp()
 
-    console.log(exception)
-
     let httpStatus =
       exception instanceof HttpException ? exception.getStatus() : exception?.code ?? HttpStatus.INTERNAL_SERVER_ERROR
 
