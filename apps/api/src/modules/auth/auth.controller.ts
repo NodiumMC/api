@@ -1,4 +1,4 @@
-import { Controller, Delete, Put, UnauthorizedException, UseGuards } from '@nestjs/common'
+import { Controller, Delete, HttpCode, HttpStatus, Put, UnauthorizedException, UseGuards } from '@nestjs/common'
 import { Public, User, UserId } from '../../common/decorators'
 import { RtGuard } from '../../common/guards'
 import { TokenService } from './token.service'
@@ -21,10 +21,11 @@ export class AuthController {
   @Public()
   @UseGuards(RtGuard)
   @Delete('logout')
+  @HttpCode(HttpStatus.NO_CONTENT)
   async logout(@User('token') token: string) {
     const exists = await this.tokenService.hasToken(token)
     if (!exists) throw new UnauthorizedException()
     await this.tokenService.removeToken(token)
-    return true
+    return
   }
 }
