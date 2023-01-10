@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common'
-import { customAlphabet } from 'nanoid'
+import { customAlphabet as anuid } from 'nanoid/async'
+import { customAlphabet as nsuid } from 'nanoid/non-secure'
 import { PrismaService } from '@app/common'
 import { Integration } from './types'
 
-const nanoid = customAlphabet('0123456789abcdefghijklmnopqrstuvwxyz', 12)
+const anid = anuid('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 18)
+const rname = nsuid('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 8)
 
 @Injectable()
 export class UserService {
@@ -18,8 +20,9 @@ export class UserService {
     if (!exists) {
       await this.prisma.user.create({
         data: {
-          nid: nanoid(),
+          nid: await anid(),
           integrations: { create: [some] },
+          username: `User ${rname()}`,
         },
       })
     }
