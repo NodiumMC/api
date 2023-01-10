@@ -25,7 +25,7 @@ export class DiscordController {
   @Public()
   @Get('callback')
   async discordCallback(@Res() res: Response, @Query() payload: DiscordLoginDto) {
-    if (!payload.code || !payload.state) return res.redirect('ndml://auth?failed')
+    if (!payload.code || !payload.state) return res.redirect('ndml:////auth?failed')
     try {
       const grant = await firstValueFrom(this.discordService.exchangeCode(payload.code, payload.state))
       const discordUser = await firstValueFrom(this.discordService.getDiscordUser(grant.access_token))
@@ -34,7 +34,7 @@ export class DiscordController {
       const existsRefresh = await this.tokenService.getValidTokenOfUser(user.id)
       if (!existsRefresh) await this.tokenService.addToken(user.id, tokens.refreshToken)
       await this.userService.updateLastLogin(user.id)
-      return res.redirect(`ndml://auth?access=${tokens.accessToken}&refresh=${existsRefresh ?? tokens.refreshToken}`)
+      return res.redirect(`ndml:///auth?access=${tokens.accessToken}&refresh=${existsRefresh ?? tokens.refreshToken}`)
     } catch (err) {
       throw new BadRequestException(err, 'Failed to login')
     }
