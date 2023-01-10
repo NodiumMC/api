@@ -16,6 +16,23 @@ export class TokenService {
     })
   }
 
+  async getValidTokenOfUser(userId: string): Promise<string | undefined> {
+    const tokens = await this.prisma.token
+      .findMany({
+        where: { userId },
+        select: { token: true },
+      })
+      .then(res => res.map(v => v.token))
+    return tokens.filter(token => {
+      try {
+        this.jwt.verify(token, { secret: process.env.AUTH_JWT_RT_SECRET })
+        return true
+      } catch (e) {
+        return false
+      }
+    })[0]
+  }
+
   async hasToken(token: string) {
     return !!(await this.prisma.token.count({
       where: { token },

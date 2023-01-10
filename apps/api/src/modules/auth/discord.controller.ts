@@ -31,9 +31,10 @@ export class DiscordController {
       const discordUser = await firstValueFrom(this.discordService.getDiscordUser(grant.access_token))
       const user = await this.userService.createFromIntegration({ type: IntegrationType.DISCORD, iid: discordUser.id })
       const tokens = await this.tokenService.generateTokenPair(user.id)
-      await this.tokenService.addToken(user.id, tokens.refreshToken)
+      const existsRefresh = await this.tokenService.getValidTokenOfUser(user.id)
+      if (!existsRefresh) await this.tokenService.addToken(user.id, tokens.refreshToken)
       await this.userService.updateLastLogin(user.id)
-      return res.redirect(`ndml://auth?access=${tokens.accessToken}&refresh=${tokens.refreshToken}`)
+      return res.redirect(`ndml://auth?access=${tokens.accessToken}&refresh=${existsRefresh ?? tokens.refreshToken}`)
     } catch (err) {
       throw new BadRequestException(err, 'Failed to login')
     }
